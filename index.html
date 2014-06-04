@@ -61,13 +61,17 @@
 <span class="n">allPageCnt</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">mutex</span> <span class="o">=</span> <span class="n">thread</span><span class="o">.</span><span class="n">allocate_lock</span><span class="p">()</span>
 <span class="n">exitmutexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">thread</span><span class="o">.</span><span class="n">allocate_lock</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">35</span><span class="p">)]</span>
-<span class="n">baseUrl</span> <span class="o">=</span> <span class="s">'https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/'</span>
+<span class="n">baseUrl</span> <span class="o">=</span> <span class="s">'https://developer.apple.com/library/prerelease/ios/documentation </span><span class="se">\</span>
+<span class="s">                    /Swift/Conceptual/Swift_Programming_Language/'</span>
+
 
 <span class="k">def</span> <span class="nf">cleanpage</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
     <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
     <span class="n">art</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'article'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">"chapter"</span><span class="p">)</span>
-    <span class="n">styleChange</span> <span class="o">=</span> <span class="p">[(</span><span class="s">'&lt;h2'</span><span class="p">,</span> <span class="s">'&lt;h1'</span><span class="p">),</span> <span class="p">(</span><span class="s">'&lt;/h2&gt;'</span><span class="p">,</span> <span class="s">'&lt;/h1&gt;'</span><span class="p">),</span> <span class="p">(</span><span class="s">'&lt;h3'</span><span class="p">,</span> <span class="s">'&lt;h2'</span><span class="p">),</span> <span class="p">(</span><span class="s">'&lt;/h3&gt;'</span><span class="p">,</span> <span class="s">'&lt;/h2&gt;'</span><span class="p">)]</span>
-    <span class="n">artHtml</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">'&lt;section\sclass=""\sid="next_previous"&gt;.+?&lt;/section&gt;'</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">),</span> <span class="s">''</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">art</span><span class="p">))</span>
+    <span class="n">styleChange</span> <span class="o">=</span> <span class="p">[(</span><span class="s">'&lt;h2'</span><span class="p">,</span> <span class="s">'&lt;h1'</span><span class="p">),</span> <span class="p">(</span><span class="s">'&lt;/h2&gt;'</span><span class="p">,</span> <span class="s">'&lt;/h1&gt;'</span><span class="p">),</span>
+                   <span class="p">(</span><span class="s">'&lt;h3'</span><span class="p">,</span> <span class="s">'&lt;h2'</span><span class="p">),</span> <span class="p">(</span><span class="s">'&lt;/h3&gt;'</span><span class="p">,</span> <span class="s">'&lt;/h2&gt;'</span><span class="p">)]</span>
+    <span class="n">artHtml</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+        <span class="s">'&lt;section\sclass=""\sid="next_previous"&gt;.+?&lt;/section&gt;'</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">),</span> <span class="s">''</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">art</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">styleChange</span><span class="p">:</span>
         <span class="n">artHtml</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">artHtml</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">artHtml</span>
@@ -94,7 +98,7 @@
     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">mutex</span><span class="o">.</span><span class="n">locked</span><span class="p">()</span> <span class="k">for</span> <span class="n">mutex</span> <span class="ow">in</span> <span class="n">exitmutexes</span><span class="p">):</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'swift.html'</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">apage</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">allPageCnt</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">apage</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">allPageCnt</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
                     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">apage</span><span class="p">)</span>
             <span class="k">print</span> <span class="s">'All done'</span>
             <span class="k">break</span>
@@ -103,7 +107,6 @@
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
-
 </pre></div>
 
 <p>./Art include css and pictures</p>
