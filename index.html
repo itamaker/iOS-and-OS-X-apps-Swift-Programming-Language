@@ -34,82 +34,13 @@
         <h1>
 <a name="the-swift-programming-language" class="anchor" href="#the-swift-programming-language"><span class="octicon octicon-link"></span></a>The-Swift-Programming-Language</h1>
 
-<p>This project spawns different formats of PDF, MOBI and monopage Html of <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/" title="The Swift Programming Language">The Swift Programming Language</a> for iOS Developer published on WWDC 2014 of <a href="https://www.apple.com" title="Appel Inc.">Appel Inc.</a>, 06-02-2014</p>
+<p>This project spawns different formats of PDF, EPUB, MOBI, markdown and monopage Html of <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/" title="The Swift Programming Language">The Swift Programming Language</a> for iOS Developer published on WWDC 2014 of <a href="https://www.apple.com" title="Appel Inc.">Appel Inc.</a>, 06-02-2014</p>
 
 <p>The project page at <a href="http://muxuezi.github.io/iOS-and-OS-X-apps-Swift-Programming-Language/" title="swiftpl">iOS-and-OS-X-apps-Swift-project</a></p>
 
 <p>The blog page at <a href="http://muxuezi.github.io/posts/the-swift-programming-language.html" title="swift">iOS-and-OS-X-apps-Swift-blog</a></p>
 
 <p>python code for <a href="https://gist.github.com/muxuezi/429c80732a8cf834caef" title="gist">Web crawler</a></p>
-
-<div class="highlight highlight-python"><pre><span class="c"># -*- coding: utf-8 -*-</span>
-<span class="c">#-------------------------------------------------------------------------</span>
-<span class="c"># Name:        The-Swift-Programming-Language</span>
-<span class="c"># Purpose:     Web crawler of Swift, Python is slow-------</span>
-<span class="c">#</span>
-<span class="c"># Author:      muxuezi@gmail.com</span>
-<span class="c">#</span>
-<span class="c"># Created:     03/06/2014</span>
-<span class="c"># Copyright:   (c) muxuezi 2014</span>
-<span class="c"># Licence:     &lt;All licence&gt;</span>
-<span class="c">#-------------------------------------------------------------------------</span>
-<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
-<span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">urlopen</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">thread</span>
-
-
-<span class="n">allPageCnt</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">mutex</span> <span class="o">=</span> <span class="n">thread</span><span class="o">.</span><span class="n">allocate_lock</span><span class="p">()</span>
-<span class="n">exitmutexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">thread</span><span class="o">.</span><span class="n">allocate_lock</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">35</span><span class="p">)]</span>
-<span class="n">baseUrl</span> <span class="o">=</span> <span class="s">'https://developer.apple.com/library/prerelease/ios/documentation </span><span class="se">\</span>
-<span class="s">                    /Swift/Conceptual/Swift_Programming_Language/'</span>
-
-
-<span class="k">def</span> <span class="nf">cleanpage</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
-    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
-    <span class="n">art</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'article'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">"chapter"</span><span class="p">)</span>
-    <span class="n">styleChange</span> <span class="o">=</span> <span class="p">[(</span><span class="s">'&lt;h2'</span><span class="p">,</span> <span class="s">'&lt;h1'</span><span class="p">),</span> <span class="p">(</span><span class="s">'&lt;/h2&gt;'</span><span class="p">,</span> <span class="s">'&lt;/h1&gt;'</span><span class="p">),</span>
-                   <span class="p">(</span><span class="s">'&lt;h3'</span><span class="p">,</span> <span class="s">'&lt;h2'</span><span class="p">),</span> <span class="p">(</span><span class="s">'&lt;/h3&gt;'</span><span class="p">,</span> <span class="s">'&lt;/h2&gt;'</span><span class="p">)]</span>
-    <span class="n">artHtml</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-        <span class="s">'&lt;section\sclass=""\sid="next_previous"&gt;.+?&lt;/section&gt;'</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">),</span> <span class="s">''</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">art</span><span class="p">))</span>
-    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">styleChange</span><span class="p">:</span>
-        <span class="n">artHtml</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">artHtml</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">artHtml</span>
-
-
-<span class="k">def</span> <span class="nf">getpage</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">mutex</span><span class="p">):</span>
-    <span class="c"># web crawler</span>
-    <span class="k">with</span> <span class="n">mutex</span><span class="p">:</span>
-        <span class="n">url</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">unit</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="n">baseUrl</span> <span class="o">+</span> <span class="n">url</span>
-        <span class="n">page</span> <span class="o">=</span> <span class="n">cleanpage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="n">allPageCnt</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span>
-        <span class="k">print</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span>
-    <span class="n">exitmutexes</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
-
-
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="c"># read all links</span>
-    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">urlopen</span><span class="p">(</span><span class="n">baseUrl</span><span class="p">))</span>
-    <span class="n">tt</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'nav'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">"book-parts hideInXcode"</span><span class="p">)</span>
-    <span class="n">allLink</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'href'</span><span class="p">),</span> <span class="n">x</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="n">tt</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s">'a'</span><span class="p">))</span>
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">unit</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">allLink</span><span class="p">):</span>
-        <span class="n">thread</span><span class="o">.</span><span class="n">start_new_thread</span><span class="p">(</span><span class="n">getpage</span><span class="p">,</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">mutex</span><span class="p">))</span>
-    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">mutex</span><span class="o">.</span><span class="n">locked</span><span class="p">()</span> <span class="k">for</span> <span class="n">mutex</span> <span class="ow">in</span> <span class="n">exitmutexes</span><span class="p">):</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'swift.html'</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">apage</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">allPageCnt</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">apage</span><span class="p">)</span>
-            <span class="k">print</span> <span class="s">'All done'</span>
-            <span class="k">break</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-</pre></div>
 
 <p>./Art include css and pictures</p>
 
