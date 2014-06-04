@@ -19,13 +19,17 @@ import thread
 allPageCnt = {}
 mutex = thread.allocate_lock()
 exitmutexes = [thread.allocate_lock() for i in range(35)]
-baseUrl = 'https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/'
+baseUrl = 'https://developer.apple.com/library/prerelease/ios/documentation \
+                    /Swift/Conceptual/Swift_Programming_Language/'
+
 
 def cleanpage(url):
     soup = BeautifulSoup(urlopen(url))
     art = soup.find('article', class_="chapter")
-    styleChange = [('<h2', '<h1'), ('</h2>', '</h1>'), ('<h3', '<h2'), ('</h3>', '</h2>')]
-    artHtml = re.sub(re.compile('<section\sclass=""\sid="next_previous">.+?</section>',re.DOTALL), '', str(art))
+    styleChange = [('<h2', '<h1'), ('</h2>', '</h1>'),
+                   ('<h3', '<h2'), ('</h3>', '</h2>')]
+    artHtml = re.sub(re.compile(
+        '<section\sclass=""\sid="next_previous">.+?</section>', re.DOTALL), '', str(art))
     for x, y in styleChange:
         artHtml = re.sub(re.compile(x), y, artHtml)
     return artHtml
@@ -52,7 +56,7 @@ def main():
     while True:
         if all(mutex.locked() for mutex in exitmutexes):
             with open('swift.html', 'wb') as f:
-                for k,apage in sorted(allPageCnt.items()):
+                for k, apage in sorted(allPageCnt.items()):
                     f.write(apage)
             print 'All done'
             break
