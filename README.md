@@ -5,7 +5,7 @@ This project spawns different formats of PDF, EPUB, MOBI, markdown and monopage 
 
 The project page at [iOS-and-OS-X-apps-Swift-project](http://muxuezi.github.io/iOS-and-OS-X-apps-Swift-Programming-Language/ "swiftpl")
 
-The blog page at [iOS-and-OS-X-apps-Swift-blog](http://muxuezi.github.io/posts/the-swift-programming-language.html "swift")
+The blog page at [iOS-and-OS-X-apps-Swift-blog](http://muxuezi.github.io/stories/the-swift-programming-language-for-iosos-x-apps "swift")
 
 python code for [Web crawler](https://gist.github.com/muxuezi/429c80732a8cf834caef "gist")
 
