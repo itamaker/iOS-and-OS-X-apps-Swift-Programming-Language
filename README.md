@@ -1,7 +1,7 @@
 The-Swift-Programming-Language
 ==============================
 
-This project spawns different formats of PDF, MOBI and monopage Html of [The Swift Programming Language][1] for iOS Developer published on WWDC 2014 of [Appel Inc.][2], 06-02-2014
+This project spawns different formats of PDF, EPUB, MOBI, markdown and monopage Html of [The Swift Programming Language][1] for iOS Developer published on WWDC 2014 of [Appel Inc.][2], 06-02-2014
 
 The project page at [iOS-and-OS-X-apps-Swift-project](http://muxuezi.github.io/iOS-and-OS-X-apps-Swift-Programming-Language/ "swiftpl")
 
